@@ -1,8 +1,11 @@
 require 'rss'
 require 'open-uri'
+require 'net/http'
+require 'uri'
 
 RELEASE_TITLE = /Ruby (\d+\.\d+\.\d+) Released/
 KNOWN_VERSIONS_FILE = ARGV[0]
+RECIPIENTS = ARGV[1].split(',').map{ |r| r.strip }
 
 def get_versions_from_rss
     versions = []
@@ -53,6 +56,22 @@ end
 
 def process_unknown_version(version) 
     puts version
+
+    url = URI("https://api.mailgun.net/v3/#{ENV['MAILGUN_SERVER']}/messages")
+    req = Net::HTTP::Post.new(url.path)
+    req.basic_auth 'api', ENV['MAILGUN_API_KEY']
+    # req.use_ssl = true
+    data = {
+        'from' => "Ruby <ruby@#{ENV['MAILGUN_SERVER']}>",
+        'subject' => "Ruby version #{version} released",
+        'text' => "New ruby version #{version} released on https://ruby-lang.org"
+    }
+    data = data.merge RECIPIENTS.map{ |r| ['to', r] }.to_h
+    req.set_form_data(data)
+    sock = Net::HTTP.new(url.host, url.port)
+    sock.use_ssl = true
+    response = sock.start {|http| http.request(req) }
+    sys.exit(1) unless response.kind_of? Net::HTTPSuccess
 end
 
 
