@@ -5,7 +5,7 @@ require 'uri'
 
 RELEASE_TITLE = /Ruby (\d+\.\d+\.\d+) Released/
 KNOWN_VERSIONS_FILE = ARGV[0]
-RECIPIENTS = ARGV[1].split(',').map{ |r| r.strip }
+RECIPIENTS = ENV['RECIPIENTS'].split(',').map{ |r| r.strip }
 
 def get_versions_from_rss
     versions = []
@@ -57,7 +57,7 @@ end
 def process_unknown_version(version) 
     puts version
 
-    url = URI("https://api.mailgun.net/v3/#{ENV['MAILGUN_SERVER']}/messages")
+    url = URI(ENV['MAILGUN_URL'])
     req = Net::HTTP::Post.new(url.path)
     req.basic_auth 'api', ENV['MAILGUN_API_KEY']
     # req.use_ssl = true
