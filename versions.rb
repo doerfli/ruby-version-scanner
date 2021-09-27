@@ -2,6 +2,7 @@ require 'rss'
 require 'open-uri'
 
 RELEASE_TITLE = /Ruby (\d+\.\d+\.\d+) Released/
+KNOWN_VERSIONS_FILE = ARGV[0]
 
 def get_versions_from_rss
     versions = []
@@ -22,8 +23,8 @@ def get_versions_from_rss
 end
 
 def read_known_versions
-    return [] unless File.exists?('knownversions.txt')
-    File.readlines('knownversions.txt').map { |v| v.strip }
+    return [] unless File.exists?(KNOWN_VERSIONS_FILE)
+    File.readlines(KNOWN_VERSIONS_FILE).map { |v| v.strip }
 end
 
 def match_versions(known_versions, versions)
@@ -39,7 +40,7 @@ end
 
 def write_unknown_versions(known_versions, unknown_versions)
     unless unknown_versions.empty?
-        File.open('knownversions.txt', 'w') { |file| 
+        File.open(KNOWN_VERSIONS_FILE, 'w') { |file| 
             known_versions.each { |v|
                 file.write("#{v}\n") 
             }
