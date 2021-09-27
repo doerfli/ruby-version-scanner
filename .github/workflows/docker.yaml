@@ -4,8 +4,7 @@ on:
   push:
 
 jobs:
-  docker:
-    if: github.actor != 'dependabot[bot]'
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
@@ -13,4 +12,10 @@ jobs:
       - uses: rlespinasse/github-slug-action@v2.x
       - run: docker build -t ghcr.io/doerfli/ruby-version-scanner:${{ env.GITHUB_REF_SLUG }} .
       - run: docker push ghcr.io/doerfli/ruby-version-scanner:${{ env.GITHUB_REF_SLUG }}
-    
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u doerfli --password-stdin
+      - uses: rlespinasse/github-slug-action@v2.x
+      - run: docker pull ghcr.io/doerfli/ruby-version-scanner:${{ env.GITHUB_REF_SLUG }}
+      - run: docker run ghcr.io/doerfli/ruby-version-scanner:${{ env.GITHUB_REF_SLUG }}
