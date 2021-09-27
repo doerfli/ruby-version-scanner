@@ -1,6 +1,10 @@
 {
-    "image": "mcr.microsoft.com/vscode/devcontainers/ruby:0-3-bullseye",
-
+    //"image": "mcr.microsoft.com/vscode/devcontainers/ruby:0-3-bullseye",
+	"build": {
+		"dockerfile": "Dockerfile",
+		// [Optional] You can use build args to set options. e.g. 'VARIANT' below affects the image in the Dockerfile
+		//"args": { "VARIANT": "buster" }
+	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"rebornix.Ruby",
@@ -12,6 +16,10 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
 	//"postCreateCommand": "gem update bundler && bundle install --jobs 4 && yarn install && ruby --version",
 
+	"runArgs": ["--init"],
+	"mounts": [ "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind" ],
+	"overrideCommand": false,
+
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+	"remoteUser": "vscode",
 }
