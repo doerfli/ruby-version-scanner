@@ -1,0 +1,17 @@
+{
+    "image": "mcr.microsoft.com/vscode/devcontainers/ruby:0-3-bullseye",
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"rebornix.Ruby",
+		"mhutchie.git-graph",
+		"eamodio.gitlens",
+		"castwide.solargraph",
+	],
+	
+	// Use 'postCreateCommand' to run commands after the container is created.
+	//"postCreateCommand": "gem update bundler && bundle install --jobs 4 && yarn install && ruby --version",
+
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode"
+}
