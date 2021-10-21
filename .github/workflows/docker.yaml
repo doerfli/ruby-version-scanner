@@ -19,4 +19,4 @@ jobs:
       - run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u doerfli --password-stdin
       - uses: rlespinasse/github-slug-action@v2.x
       - run: docker pull ghcr.io/doerfli/version-tracker:${{ env.GITHUB_REF_SLUG }}
-      - run: docker run -e MAILGUN_API_KEY=abcde -e MAILGUN_URL=https://hookb.in/PxzVVMmWGltpKPrrKPgq -e MAILGUN_SERVER=yourdomain.com -e RECIPIENTS=me@somewhere.org ghcr.io/doerfli/version-tracker:${{ env.GITHUB_REF_SLUG }}
+      - run: docker run -e MAILGUN_API_KEY=abcde -e MAILGUN_URL=https://versiontracker.free.beeceptor.com/api -e MAILGUN_SERVER=yourdomain.com -e RECIPIENTS=me@somewhere.org ghcr.io/doerfli/version-tracker:${{ env.GITHUB_REF_SLUG }}

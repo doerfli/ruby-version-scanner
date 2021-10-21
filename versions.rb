@@ -2,7 +2,6 @@ require 'rss'
 require 'open-uri'
 require 'net/http'
 require 'uri'
-require 'sys'
 
 RELEASE_TITLE = /Ruby (\d+\.\d+\.\d+) Released/
 KNOWN_VERSIONS_FILE = ARGV[0]
@@ -72,7 +71,7 @@ def process_unknown_version(version)
     sock = Net::HTTP.new(url.host, url.port)
     sock.use_ssl = true
     response = sock.start {|http| http.request(req) }
-    sys.exit(1) unless response.kind_of? Net::HTTPSuccess
+    exit(1) unless response.kind_of? Net::HTTPSuccess
 end
 
 
