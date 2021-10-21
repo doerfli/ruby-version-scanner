@@ -2,6 +2,7 @@ require 'rss'
 require 'open-uri'
 require 'net/http'
 require 'uri'
+require 'sys'
 
 RELEASE_TITLE = /Ruby (\d+\.\d+\.\d+) Released/
 KNOWN_VERSIONS_FILE = ARGV[0]
