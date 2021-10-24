@@ -1,6 +1,7 @@
 require 'net/http'
 require 'uri'
 require './ruby.rb'
+require './adoptium.rb'
 
 RELEASE_TITLE = /Ruby (\d+\.\d+\.\d+) Released/
 KNOWN_VERSIONS_FILE = ARGV[0]
@@ -58,6 +59,7 @@ end
 
 
 versions = get_ruby_versions_from_rss
+versions << get_openjdk_versions
 known_versions = read_known_versions
 unknown_versions = match_versions(known_versions, versions)
 
