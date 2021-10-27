@@ -54,12 +54,12 @@ def process_unknown_versions(versions)
     sock = Net::HTTP.new(url.host, url.port)
     sock.use_ssl = true
     response = sock.start {|http| http.request(req) }
-    exit(1) unless response.kind_of? Net::HTTPSuccess
+    exit(12) unless response.kind_of? Net::HTTPSuccess
 end
 
 
 versions = get_ruby_versions_from_rss
-versions << get_openjdk_versions
+versions.concat get_openjdk_versions
 known_versions = read_known_versions
 unknown_versions = match_versions(known_versions, versions)
 
