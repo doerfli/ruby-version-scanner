@@ -3,6 +3,7 @@ require 'uri'
 require './ruby.rb'
 require './adoptium.rb'
 require './python.rb'
+require './meteor.rb'
 
 RELEASE_TITLE = /Ruby (\d+\.\d+\.\d+) Released/
 KNOWN_VERSIONS_FILE = ARGV[0]
@@ -62,6 +63,7 @@ end
 versions = get_ruby_versions_from_rss
 versions.concat get_openjdk_versions
 versions.concat get_python_versions
+versions.concat get_meteor_versions
 known_versions = read_known_versions
 unknown_versions = match_versions(known_versions, versions)
 
